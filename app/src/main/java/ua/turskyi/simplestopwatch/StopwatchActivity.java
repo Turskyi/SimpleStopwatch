@@ -4,20 +4,18 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
-
 import static androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES;
 
 public class StopwatchActivity extends AppCompatActivity {
-    //    private int seconds = 0;
     private int milliseconds = 0;
+
+    /* Is the stopwatch running? */
     private boolean running;
     private boolean wasRunning;
     private TextView timeView;
@@ -30,18 +28,15 @@ public class StopwatchActivity extends AppCompatActivity {
         timeView = findViewById(R.id.time_view);
         if (savedInstanceState != null) {
             milliseconds = savedInstanceState.getInt("milliseconds");
-//            seconds = savedInstanceState.getInt("seconds");
             running = savedInstanceState.getBoolean("running");
             wasRunning = savedInstanceState.getBoolean("wasRunning");
         }
-//        runSeconds();
         runMilliseconds();
     }
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
-//        savedInstanceState.putInt("seconds", seconds);
         savedInstanceState.putInt("seconds", milliseconds);
         savedInstanceState.putBoolean("running", running);
         savedInstanceState.putBoolean("wasRunning", wasRunning);
@@ -62,48 +57,19 @@ public class StopwatchActivity extends AppCompatActivity {
         }
     }
 
-    //Start the stopwatch running when the Start button is clicked.
+    /* Start the stopwatch running when the Start button is clicked. */
     public void onClickStart(View view) {
         running = true;
     }
 
-    //Stop the stopwatch running when the Stop button is clicked.
-    public void onClickStop(View view) {
-        running = false;
-    }
+    /* Stop the stopwatch running when the Stop button is clicked. */
+    public void onClickStop(View view) { running = false; }
 
-    //Reset the stopwatch when the Reset button is clicked.
+    /* Reset the stopwatch when the Reset button is clicked. */
     public void onClickReset(View view) {
         running = false;
-//        seconds = 0;
         milliseconds = 0;
     }
-
-//    /**
-//     * Sets the number of seconds on the timer.
-//     * */
-//    private void runSeconds() {
-//        final TextView timeView = findViewById(R.id.time_view);
-//        final Handler handler = new Handler();
-//        handler.post(new Runnable() {
-//            @Override
-//            public void run() {
-//                int hours = seconds/3600;
-//                int minutes = (seconds%3600)/60;
-//                int secs = seconds%60;
-//                String time = String.format(Locale.getDefault(),
-//                        "%d:%02d:%02d" +
-//                                "", hours, minutes, secs
-//                );
-//                timeView.setText(time);
-//                if (running) {
-//                    seconds++;
-//                }
-//                handler.postDelayed(this, 1000);
-//            }
-//        });
-//    }
-
 
     /**
      * Sets the number of milliseconds on the timer.
@@ -125,7 +91,6 @@ public class StopwatchActivity extends AppCompatActivity {
         uiHandler.post(new Runnable() {
             @Override
             public void run() {
-
                 int hours = (milliseconds / 100) / 3600;
                 int minutes = ((milliseconds / 100) % 3600) / 60;
                 int secs = (milliseconds / 100) % 60;
